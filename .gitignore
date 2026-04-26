@@ -1,5 +1,9 @@
 # python venv dir
 .venv/
+venv/
+env/
+.env/
+ENV/
 
 # IDE config
 .vscode/
@@ -8,3 +12,8 @@
 # python cache and cache dir
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# OS file
+.DS_Store/
