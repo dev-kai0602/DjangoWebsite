@@ -1,0 +1,10 @@
+# python venv dir
+.venv/
+
+# IDE config
+.vscode/
+.idea/
+
+# python cache and cache dir
+__pycache__/
+*.pyc
