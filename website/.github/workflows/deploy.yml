@@ -1,0 +1,30 @@
+name: DjangoWebsite CI/CD
+
+on:
+  push:
+    branches: [ main ]  # 推送到 main 分支时触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 拉取最新代码
+      uses: actions/checkout@v4
+    
+    - name: 部署到阿里云服务器
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.DEPLOY_HOST }}
+        username: ${{ secrets.DEPLOY_USER }}
+        key: ${{ secrets.DEPLOY_SSH_KEY }}
+        script: |
+          cd /root/www/DjangoWebsite
+          git pull origin main
+          source .venv/bin/activate
+          pip install -r requirements.txt
+          python manage.py migrate
+          python manage.py collectstatic --noinput
+          sudo systemctl restart gunicorn
+          # sudo supervisorctl restart django
+          echo "Django deploy success!"
